@@ -19,9 +19,21 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/collective/pytest-plone?style=social)](https://github.com/collective/pytest-plone)
 </div>
 
-**pytest-plone** is a [Pytest](https://docs.pytest.org) plugin providing fixtures and helpers to test [Plone](https://plone.org) add-ons.
+**pytest-plone** is a [pytest](https://docs.pytest.org) plugin providing fixtures and helpers to test [Plone](https://plone.org) add-ons.
 
-This plugin is built on top of [gocept.pytestlayer](https://github.com/gocept/gocept.pytestlayer).
+
+This package is built on top of [gocept.pytestlayer](https://github.com/gocept/gocept.pytestlayer).
+
+
+## Reasoning
+
+Despite the fact Plone, and Zope, have their codebases tested with `unittest`, over the years
+`pytest` became the most popular choice for testing in Python.
+
+`pytest` is more flexible and easier to use than `unittest` and has a rich ecosystem of plugins that you can use to extend its functionality.
+## Warning
+
+**THIS PACKAGE IS NOT CONSIDERED TO BE STABLE AND FIXTURES COULD CHANGE BEFORE A FINAL RELEASE**
 
 ## Usage
 
@@ -165,3 +177,25 @@ def test_configlet_install(controlpanel_actions):
     assert "myproductcontrolpanel" in controlpanel_actions
 
 ```
+
+## Plugin Development
+
+You need a working `python` environment (system, virtualenv, pyenv, etc) version 3.8 or superior.
+
+Then install the dependencies and a development instance using:
+
+```bash
+make build
+```
+
+To run tests for this package:
+
+```bash
+make test
+```
+
+By default we use the latest Plone version in the 6.x series.
+
+## License
+
+The project is licensed under the GPLv2.
