@@ -1,0 +1,25 @@
+.coverage
+*.egg-info
+*.py?
+*.swp
+# dirs
+bin/
+include/
+lib/
+lib64/
+etc/
+src/*
+var/
+__pycache__
+.pytest_cache
+# files
+.python-version
+pyvenv.cfg
+inituser
+# excludes
+!.coveragerc
+!.editorconfig
+!.gitattributes
+!.gitignore
+!.gitkeep
+!src/pytest_plone

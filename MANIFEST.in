@@ -1,0 +1,7 @@
+graft src/pytest_plone
+graft docs
+graft tests
+include *.in *.md *.png *.svg *.GPL Makefile
+include .editorconfig
+exclude pyvenv.cfg
+global-exclude *.py[cod]
