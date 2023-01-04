@@ -14,7 +14,7 @@ description = "Pytest plugin to test Plone addons"
 
 setup(
     name="pytest-plone",
-    version="0.1.0.dev0",
+    version="0.1.0",
     description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",
