@@ -200,7 +200,7 @@ def test_configlet_install(controlpanel_actions):
 
 |  |  |
 | --- | --- |
-| Description | Function to get the fti for a content type. |
+| Description | Function to get the Factory Type Info (FTI) for a content type. |
 | Required Fixture | **integration** |
 | Scope | **Function** |
 
@@ -297,7 +297,7 @@ PACKAGE_NAME = "collective.case_study"
 def test_last_version(profile_last_version):
     """Test setup_tool."""
     profile = f"{PACKAGE_NAME}:default"
-    version = profile_last_version()
+    version = profile_last_version(profile)
     assert version == "1000"
 
 ```
