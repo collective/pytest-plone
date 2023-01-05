@@ -3,7 +3,17 @@
 ## 0.1.1 (unreleased)
 
 
-- Nothing changed yet.
+- Add `app` fixture.
+  [ericof]
+
+- Add `setup_tool` and `profile_last_version` fixtures.
+  [ericof]
+
+- Add `get_fti` and `get_behaviors` fixtures.
+  [ericof]
+
+- Add `get_vocabulary` fixture.
+  [ericof]
 
 
 ## 0.1.0 (2023-01-04)
