@@ -72,6 +72,21 @@ In the code above, the following pytest fixtures will be available to your tests
 
 ## Fixtures
 
+### app
+
+|  |  |
+| --- | --- |
+| Description | Zope root |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+def test_app(app):
+    """Test portal title."""
+    assert app.getPhysicalPath() == ("", )
+
+```
+
 ### portal
 
 |  |  |
@@ -181,6 +196,111 @@ def test_configlet_install(controlpanel_actions):
 
 ```
 
+### get_fti
+
+|  |  |
+| --- | --- |
+| Description | Function to get the Factory Type Info (FTI) for a content type. |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+def test_get_fti(get_fti):
+    """Test if Document fti is installed."""
+    assert get_fti("Document") is not None
+
+```
+
+### get_behaviors
+
+|  |  |
+| --- | --- |
+| Description | Function to list behaviors for a content type. |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+import pytest
+
+
+def test_block_in_document(get_behaviors):
+    """Test if blocks behavior is installed for Document."""
+    assert "volto.blocks" in get_behaviors("Document")
+
+
+@pytest.mark.parametrize(
+    "behavior",
+    [
+        "plone.dublincore",
+        "plone.namefromtitle",
+        "plone.shortname",
+        "plone.excludefromnavigation",
+        "plone.relateditems",
+        "plone.versioning",
+        "volto.blocks",
+        "volto.navtitle",
+        "volto.preview_image",
+        "volto.head_title",
+    ],
+)
+def test_has_behavior(self, get_behaviors, behavior):
+    assert behavior in get_behaviors("Document")
+```
+
+### get_vocabulary
+
+|  |  |
+| --- | --- |
+| Description | Function to get a named vocabulary. |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+from zope.schema.vocabulary import SimpleVocabulary
+
+VOCAB = "plone.app.vocabularies.AvailableContentLanguages"
+
+def test_get_vocabulary(get_vocabulary):
+    """Test plone.app.vocabularies.AvailableContentLanguages."""
+    vocab = get_vocabulary(VOCAB)
+    assert vocab is not None
+    assert isinstance(vocab, SimpleVocabulary)
+
+```
+
+### setup_tool
+
+|  |  |
+| --- | --- |
+| Description | Portal Setup tool. |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+def test_setup_tool(setup_tool):
+    """Test setup_tool."""
+    assert setup_tool is not None
+
+```
+
+### profile_last_version
+
+|  |  |
+| --- | --- |
+| Description | Function to get the last version of a profile. |
+| Required Fixture | **integration** |
+| Scope | **Function** |
+
+```python
+PACKAGE_NAME = "collective.case_study"
+
+def test_last_version(profile_last_version):
+    """Test setup_tool."""
+    profile = f"{PACKAGE_NAME}:default"
+    version = profile_last_version(profile)
+    assert version == "1000"
+
+```
 ## Plugin Development
 
 You need a working `python` environment (system, virtualenv, pyenv, etc) version 3.8 or superior.

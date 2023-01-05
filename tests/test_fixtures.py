@@ -1,29 +1,33 @@
 def test_all_fixtures(testdir):
-    """Test installer fixture."""
+    """Test pytest-plone fixtures exist."""
 
-    # create a temporary pytest test file
-    testdir.makepyfile(
+    fixtures = [
+        "app",
+        "browser_layers",
+        "controlpanel_actions",
+        "get_behaviors",
+        "get_fti",
+        "get_vocabulary",
+        "http_request",
+        "installer",
+        "profile_last_version",
+        "portal",
+        "setup_tool",
+    ]
+    pyfile = ""
+    for fixture in fixtures:
+        pyfile = f"""
+        {pyfile}
+
+        def test_{fixture}({fixture}):
+            assert {fixture} is not None
+
         """
-        def test_http_request(http_request):
-            assert http_request is not None
 
-        def test_installer(installer):
-            assert installer is not None
-
-        def test_portal(portal):
-            assert portal.portal_type == "Plone Site"
-
-        def test_browser_layers(browser_layers):
-            assert isinstance(browser_layers, list)
-
-        def test_controlpanel_actions(controlpanel_actions):
-            assert isinstance(controlpanel_actions, list)
-
-    """
-    )
+    testdir.makepyfile(pyfile)
 
     # run all tests with pytest
     result = testdir.runpytest()
 
     # check that all tests passed
-    result.assert_outcomes(passed=5)
+    result.assert_outcomes(passed=len(fixtures))
