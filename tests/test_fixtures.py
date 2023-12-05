@@ -1,6 +1,5 @@
 def test_all_fixtures(testdir):
     """Test pytest-plone fixtures exist."""
-
     fixtures = [
         "app",
         "browser_layers",

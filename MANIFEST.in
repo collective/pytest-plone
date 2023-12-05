@@ -1,7 +1,16 @@
 graft src/pytest_plone
 graft docs
+graft news
 graft tests
-include *.in *.md *.png *.svg *.GPL Makefile
+include .coveragerc
+include .dockerignore
 include .editorconfig
+include *.txt
+include *.yml
+include *.md
+exclude *-mxdev.txt
 exclude pyvenv.cfg
+exclude instance.yaml
+exclude Makefile
 global-exclude *.py[cod]
+global-exclude .DS_Store
