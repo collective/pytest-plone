@@ -30,6 +30,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python",
         "Topic :: Software Development :: Testing",
@@ -38,6 +39,11 @@ setup(
     author="Plone",
     author_email="test@plone.org",
     url="http://pypi.python.org/pypi/pytest-plone",
+    project_urls={
+        "PyPI": "https://pypi.python.org/pypi/pytest-plone",
+        "Source": "https://github.com/collective/pytest-plone",
+        "Tracker": "https://github.com/collective/pytest-plone/issues",
+    },
     license="GPL",
     packages=find_packages("src", exclude=["ez_setup"]),
     package_dir={"": "src"},
@@ -49,9 +55,14 @@ setup(
         "setuptools",
         "gocept.pytestlayer",
         "plone.app.testing",
-        "plone.app.robotframework",
         "pytest",
     ],
-    extras_require={},
+    extras_require={
+        "test": [
+            "zest.releaser[recommended]",
+            "zestreleaser.towncrier",
+            "pytest-cov",
+        ],
+    },
     entry_points={"pytest11": ["plone = pytest_plone.fixtures"]},
 )
