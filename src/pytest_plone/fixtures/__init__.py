@@ -9,6 +9,7 @@ from .base import http_request
 from .base import portal
 from .content import get_behaviors
 from .content import get_fti
+from .env import generate_mo
 from .vocabularies import get_vocabulary
 
 
@@ -17,6 +18,7 @@ __all__ = [
     browser_layers,
     controlpanel_actions,
     get_behaviors,
+    generate_mo,
     get_fti,
     get_vocabulary,
     http_request,
