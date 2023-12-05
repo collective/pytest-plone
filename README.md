@@ -11,8 +11,7 @@
 
 [![PyPI - Plone Versions](https://img.shields.io/pypi/frameworkversions/plone/pytest-plone)](https://pypi.org/project/pytest-plone/)
 
-[![Code analysis checks](https://github.com/collective/pytest-plone/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/collective/pytest-plone/actions/workflows/code-analysis.yml)
-[![Tests](https://github.com/collective/pytest-plone/actions/workflows/tests.yml/badge.svg)](https://github.com/collective/pytest-plone/actions/workflows/tests.yml)
+[![Tests](https://github.com/collective/pytest-plone/actions/workflows/meta.yml/badge.svg)](https://github.com/collective/pytest-plone/actions/workflows/meta.yml)
 ![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000)
 
 [![GitHub contributors](https://img.shields.io/github/contributors/collective/pytest-plone)](https://github.com/collective/pytest-plone)
@@ -71,6 +70,25 @@ In the code above, the following pytest fixtures will be available to your tests
 
 
 ## Fixtures
+
+### generate_mo
+
+|  |  |
+| --- | --- |
+| Description | Set environment variable to force Zope to compile translation files |
+| Required Fixture |  |
+| Scope | **Session** |
+
+Add a new fixture to your `conftest.py` to force `generate_mo` to be called for all tests.
+
+```python
+
+@pytest.fixture(scope="session", autouse=True)
+def session_initialization(generate_mo):
+    """Fixture used to force translation files to be compiled."""
+    yield
+
+```
 
 ### app
 
