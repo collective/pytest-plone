@@ -13,9 +13,11 @@ def generate_mo():
     key = "zope_i18n_compile_mo_files"
     current_value = os.getenv(key, None)
     os.environ[key] = "1"
-    yield
-    # Revert to previous state
-    if current_value is None:
-        os.environ.pop(key)
-    else:
-        os.environ[key] = current_value
+    try:
+        yield
+    finally:
+        # Revert to previous state
+        if current_value is None:
+            os.environ.pop(key)
+        else:
+            os.environ[key] = current_value
