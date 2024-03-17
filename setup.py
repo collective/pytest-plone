@@ -51,11 +51,15 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        "Plone",
-        "setuptools",
         "gocept.pytestlayer",
-        "plone.app.testing",
+        "plone.api",
+        "plone.base",
+        "plone.browserlayer",
+        "plone.dexterity",
         "pytest",
+        "setuptools",
+        "zope.component",
+        "zope.schema",
     ],
     extras_require={
         "test": [

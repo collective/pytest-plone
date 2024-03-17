@@ -1,0 +1,7 @@
+Cleanup dependencies
+
+Declare the direct dependencies of this project and remove the dependency
+"Plone" which might pull in unwanted other dependencies.
+
+Fixes: #9
+[thet]
