@@ -53,6 +53,7 @@ setup(
     install_requires=[
         "gocept.pytestlayer",
         "plone.api",
+        "plone.app.testing",
         "plone.base",
         "plone.browserlayer",
         "plone.dexterity",
