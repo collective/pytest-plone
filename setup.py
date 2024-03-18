@@ -56,6 +56,7 @@ setup(
         "plone.base",
         "plone.browserlayer",
         "plone.dexterity",
+        "Products.CMFPlone",
         "pytest",
         "setuptools",
         "zope.component",
