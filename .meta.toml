@@ -12,6 +12,7 @@ dependencies_ignores = "['plone.volto', 'zestreleaser.towncrier', 'zest.releaser
 
 [tox]
 use_mxdev = true
+package_name = "pytest_plone"
 test_runner = "pytest"
 test_path = "/tests"
 
