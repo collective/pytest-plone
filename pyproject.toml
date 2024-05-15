@@ -122,7 +122,6 @@ Zope = [
 ]
 python-dateutil = ['dateutil']
 ignore-packages = ['plone.volto', 'zestreleaser.towncrier', 'zest.releaser', 'pytest', 'pytest-cov', 'plone.app.testing']
-Plone = ['Products.CMFPlone', 'Products.CMFCore', 'Products.GenericSetup', 'Products.ZCatalog', 'z3c.form']
 
 ##
 # Add extra configuration options in .meta.toml:

@@ -3,15 +3,12 @@
 # See the inline comments on how to expand/tweak this configuration file
 [meta]
 template = "default"
-commit-id = "a58656d9"
+commit-id = "f17fd3ad"
 
 [pyproject]
 codespell_skip = "*.min.js"
 codespell_ignores = "vew"
 dependencies_ignores = "['plone.volto', 'zestreleaser.towncrier', 'zest.releaser', 'pytest', 'pytest-cov', 'plone.app.testing']"
-dependencies_mappings = [
-    "Plone = ['Products.CMFPlone', 'Products.CMFCore', 'Products.GenericSetup', 'Products.ZCatalog', 'z3c.form']",
-    ]
 
 [tox]
 use_mxdev = true

@@ -25,15 +25,18 @@ on:
 
 jobs:
   qa:
-    uses: plone/meta/.github/workflows/qa.yml@1.0.0
+    uses: plone/meta/.github/workflows/qa.yml@main
   test:
-    uses: plone/meta/.github/workflows/test.yml@1.0.0
+    uses: plone/meta/.github/workflows/test.yml@main
+    with:
+
+       py-versions: '["3.11", "3.10", "3.9"]'
   coverage:
-    uses: plone/meta/.github/workflows/coverage.yml@1.0.0
+    uses: plone/meta/.github/workflows/coverage.yml@main
   dependencies:
-    uses: plone/meta/.github/workflows/dependencies.yml@1.0.0
+    uses: plone/meta/.github/workflows/dependencies.yml@main
   release_ready:
-    uses: plone/meta/.github/workflows/release_ready.yml@1.0.0
+    uses: plone/meta/.github/workflows/release_ready.yml@main
 
 ##
 # To modify the list of default jobs being created add in .meta.toml:
