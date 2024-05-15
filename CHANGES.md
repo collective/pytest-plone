@@ -9,6 +9,22 @@
 
 <!-- towncrier release notes start -->
 
+## 0.5.0 (2024-05-15)
+
+
+### New features:
+
+- Add fixture `generate_mo` to compile translation files during tests [@ericof] #5
+- Move from `gocept.pytestlayer` to `zope.pytestlayer` [@ericof] #11
+
+
+### Internal:
+
+- Implement plone/meta [@ericof] #6
+- Clean up dependencies for pytest-plone [@thet], [@gforcada], [@ericof] #9
+- Pin pytest version to be lower than 8.0 [@ericof] #12
+- Update plone/meta [@ericof] #13
+
 ## 0.2.0 (2023-01-05)
 
 - Add `app` fixture.
