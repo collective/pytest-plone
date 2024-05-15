@@ -1,4 +1,5 @@
 """Fixtures used to test vocabularies."""
+
 from zope.component import getUtility
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary

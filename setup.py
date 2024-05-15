@@ -1,4 +1,5 @@
 """Installer for the pytest-plone package."""
+
 from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
@@ -51,11 +52,17 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        "Plone",
-        "setuptools",
-        "gocept.pytestlayer",
+        "zope.pytestlayer",
+        "plone.api",
         "plone.app.testing",
-        "pytest",
+        "plone.base",
+        "plone.browserlayer",
+        "plone.dexterity",
+        "Products.CMFPlone",
+        "pytest<8.0.0",
+        "setuptools",
+        "zope.component",
+        "zope.schema",
     ],
     extras_require={
         "test": [

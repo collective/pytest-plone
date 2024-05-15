@@ -21,7 +21,7 @@
 **pytest-plone** is a [pytest](https://docs.pytest.org) plugin providing fixtures and helpers to test [Plone](https://plone.org) add-ons.
 
 
-This package is built on top of [gocept.pytestlayer](https://github.com/gocept/gocept.pytestlayer).
+This package is built on top of [zope.pytestlayer](https://github.com/zopefoundation/zope.pytestlayer).
 
 
 ## Reasoning

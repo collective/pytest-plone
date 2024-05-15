@@ -1,4 +1,5 @@
 """Environment fixtures."""
+
 import os
 import pytest
 

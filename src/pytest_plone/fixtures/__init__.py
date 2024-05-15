@@ -1,4 +1,5 @@
 """All Fixtures."""
+
 from .addons import browser_layers
 from .addons import controlpanel_actions
 from .addons import installer

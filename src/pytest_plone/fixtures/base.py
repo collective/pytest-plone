@@ -1,4 +1,5 @@
 """Base fixtures."""
+
 import pytest
 
 
