@@ -1,4 +1,5 @@
 """Fixtures used in content tests."""
+
 from plone.dexterity.fti import DexterityFTI
 from plone.dexterity.interfaces import IDexterityFTI
 from zope.component import queryUtility

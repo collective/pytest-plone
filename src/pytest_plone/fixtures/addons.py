@@ -1,4 +1,5 @@
 """Fixtures used in add-on install / uninstall tests."""
+
 from plone import api
 from plone.base.utils import get_installer
 from plone.browserlayer import utils

@@ -1,4 +1,5 @@
 """Installer for the pytest-plone package."""
+
 from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
@@ -55,7 +56,7 @@ setup(
         "setuptools",
         "gocept.pytestlayer",
         "plone.app.testing",
-        "pytest",
+        "pytest<8.0.0",
     ],
     extras_require={
         "test": [
