@@ -66,6 +66,7 @@ setup(
     ],
     extras_require={
         "test": [
+            "Products.CMFPlone[test]",
             "zest.releaser[recommended]",
             "zestreleaser.towncrier",
             "pytest-cov",
