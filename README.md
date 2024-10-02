@@ -30,9 +30,6 @@ Despite the fact Plone, and Zope, have their codebases tested with `unittest`, o
 `pytest` became the most popular choice for testing in Python.
 
 `pytest` is more flexible and easier to use than `unittest` and has a rich ecosystem of plugins that you can use to extend its functionality.
-## Warning
-
-**THIS PACKAGE IS NOT CONSIDERED TO BE STABLE AND FIXTURES COULD CHANGE BEFORE A FINAL RELEASE**
 
 ## Usage
 
