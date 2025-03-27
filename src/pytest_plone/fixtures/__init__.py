@@ -1,4 +1,4 @@
-"""All Fixtures."""
+"""Fixtures provided by pytest-plone."""
 
 from .addons import browser_layers
 from .addons import controlpanel_actions
@@ -15,16 +15,16 @@ from .vocabularies import get_vocabulary
 
 
 __all__ = [
-    app,
-    browser_layers,
-    controlpanel_actions,
-    get_behaviors,
-    generate_mo,
-    get_fti,
-    get_vocabulary,
-    http_request,
-    installer,
-    profile_last_version,
-    portal,
-    setup_tool,
+    "app",
+    "browser_layers",
+    "controlpanel_actions",
+    "generate_mo",
+    "get_behaviors",
+    "get_fti",
+    "get_vocabulary",
+    "http_request",
+    "installer",
+    "portal",
+    "profile_last_version",
+    "setup_tool",
 ]

@@ -1,12 +1,14 @@
 """Environment fixtures."""
 
+from collections.abc import Generator
+
 import os
 import pytest
 
 
 @pytest.fixture(scope="session")
-def generate_mo():
-    """Compile translation files and generate .mo files.
+def generate_mo() -> Generator[None]:
+    """Compile available .po files and generate .mo files.
 
     This is a session fixture, as it needs to compile files just once.
     """
