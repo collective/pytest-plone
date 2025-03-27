@@ -9,7 +9,8 @@ env:
   python-version: 3.12
 
 jobs:
-  build:
+  changelog:
+    name: "Check for change log entries"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
