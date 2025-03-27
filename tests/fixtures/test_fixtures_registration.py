@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.no_cover
 def test_fixture_exists(testdir, fixture_name: str):
     """Test pytest-plone fixtures exist."""
 

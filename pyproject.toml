@@ -176,7 +176,7 @@ preview = true
 "tests/*" = ["E501", "RUF001", "S101"]
 
 [tool.pytest.ini_options]
-addopts = "-n1"
+addopts = "-nauto"
 testpaths = ["tests"]
 
 [tool.coverage.run]

@@ -42,3 +42,4 @@ var/
 /venv/
 constraints*.txt
 requirements*.txt
+.coverage*

@@ -124,7 +124,7 @@ test: $(VENV_FOLDER) ## run tests
 
 .PHONY: test-coverage
 test-coverage: $(VENV_FOLDER) ## run tests with coverage
-	@uv run pytest --cov=pytest_plone --cov-report term-missing
+	@uv run pytest -n0 --cov=pytest_plone --cov-report term-missing
 
 ############################################
 # Release
