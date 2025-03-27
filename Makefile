@@ -15,29 +15,30 @@ GREEN=`tput setaf 2`
 RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
-
-PLONE6=6.0-latest
-
 # Python checks
-PYTHON?=python3
+UV?=uv
 
 # installed?
-ifeq (, $(shell which $(PYTHON) ))
-  $(error "PYTHON=$(PYTHON) not found in $(PATH)")
-endif
-
-# version ok?
-PYTHON_VERSION_MIN=3.8
-PYTHON_VERSION_OK=$(shell $(PYTHON) -c "import sys; print((int(sys.version_info[0]), int(sys.version_info[1])) >= tuple(map(int, '$(PYTHON_VERSION_MIN)'.split('.'))))")
-ifeq ($(PYTHON_VERSION_OK),0)
-  $(error "Need python $(PYTHON_VERSION) >= $(PYTHON_VERSION_MIN)")
+ifeq (, $(shell which $(UV) ))
+  $(error "UV=$(UV) not found in $(PATH)")
 endif
 
 BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-GIT_FOLDER=$(BACKEND_FOLDER)/.git
+ifdef PLONE_VERSION
+PLONE_VERSION := $(PLONE_VERSION)
+else
+PLONE_VERSION := 6.1.1
+endif
 
-all: install
+VENV_FOLDER=$(BACKEND_FOLDER)/.venv
+BIN_FOLDER=$(VENV_FOLDER)/bin
+
+# Environment variables to be exported
+export PYTHONWARNINGS := ignore
+export DOCKER_BUILDKIT := 1
+
+all: build
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -45,44 +46,93 @@ all: install
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-bin/pip bin/tox bin/mxdev:
-	@echo "$(GREEN)==> Setup Virtual Env$(RESET)"
-	$(PYTHON) -m venv .
-	bin/pip install -U "pip" "wheel" "pipx" "mxdev" "tox" "pre-commit"
-	if [ -d $(GIT_FOLDER) ]; then bin/pre-commit install; else echo "$(RED) Not installing pre-commit$(RESET)";fi
+############################################
+# Config
+############################################
+instance/etc/zope.ini instance/etc/zope.conf: ## Create instance configuration
+	@echo "$(GREEN)==> Create instance configuration$(RESET)"
+	@uvx cookiecutter -f --no-input -c 2.1.1 --config-file instance.yaml gh:plone/cookiecutter-zope-instance
 
 .PHONY: config
-config: bin/pip  ## Create instance configuration
-	@echo "$(GREEN)==> Create instance configuration$(RESET)"
-	pipx run cookiecutter -f --no-input --config-file instance.yaml gh:plone/cookiecutter-zope-instance
+config: instance/etc/zope.ini
+
+############################################
+# Install
+############################################
+
+requirements-mxdev.txt: ## Generate constraints file
+	@echo "$(GREEN)==> Generate constraints file$(RESET)"
+	@echo '-c https://dist.plone.org/release/$(PLONE_VERSION)/constraints.txt' > requirements.txt
+	@uvx mxdev -c mx.ini
+
+$(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
+	@echo "$(GREEN)==> Install environment$(RESET)"
+	@uv venv $(VENV_FOLDER)
+	@uv pip install -r requirements-mxdev.txt
+
+.PHONY: sync
+sync: $(VENV_FOLDER) ## Sync project dependencies
+	@echo "$(GREEN)==> Sync project dependencies$(RESET)"
+	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: install
-install: build-dev ## Install Plone 6.0
-
-.PHONY: build-dev
-build-dev: config ## pip install Plone packages
-	@echo "$(GREEN)==> Setup Build$(RESET)"
-	bin/mxdev -c mx.ini
-	bin/pip install -r requirements-mxdev.txt
+install: $(VENV_FOLDER) config ## Install Plone and dependencies
 
 .PHONY: clean
-clean: ## Remove old virtualenv and creates a new one
+clean: ## Clean installation and instance
 	@echo "$(RED)==> Cleaning environment and build$(RESET)"
-	rm -rf bin lib lib64 include share etc var inituser pyvenv.cfg .installed.cfg instance .tox .pytest_cache
-.PHONY: format
-format: bin/tox ## Format the codebase according to our standards
-	@echo "$(GREEN)==> Format codebase$(RESET)"
-	bin/tox -e format
+	@rm -rf $(VENV_FOLDER) pyvenv.cfg .installed.cfg instance .venv .pytest_cache .ruff_cache constraints* requirements*
 
+.PHONY: remove-data
+remove-data: ## Remove all content
+	@echo "$(RED)==> Removing all content$(RESET)"
+	rm -rf $(VENV_FOLDER) instance/var
+
+############################################
+# QA
+############################################
 .PHONY: lint
-lint: ## check code style
-	bin/tox -e lint
+lint: ## Check and fix code base according to Plone standards
+	@echo "$(GREEN)==> Lint codebase$(RESET)"
+	@uvx ruff@latest check --fix --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx pyroma@latest -d .
+	@uvx check-python-versions@latest .
+	@uvx zpretty@latest --check src
 
+.PHONY: format
+format: ## Check and fix code base according to Plone standards
+	@echo "$(GREEN)==> Format codebase$(RESET)"
+	@uvx ruff@latest check --select I --fix --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx ruff@latest format --config $(BACKEND_FOLDER)/pyproject.toml
+	@uvx zpretty@latest -i src
+
+.PHONY: check
+check: format lint ## Check and fix code base according to Plone standards
+
+############################################
 # Tests
+############################################
 .PHONY: test
-test: bin/tox ## run tests
-	bin/tox -e test
+test: $(VENV_FOLDER) ## run tests
+	@uv run pytest
 
 .PHONY: test-coverage
-test-coverage: bin/tox ## run tests with coverage
-	bin/tox -e coverage
+test-coverage: $(VENV_FOLDER) ## run tests with coverage
+	@uv run pytest --cov=pytest_plone --cov-report term-missing
+
+############################################
+# Release
+############################################
+.PHONY: changelog
+changelog: ## Release the package to pypi.org
+	@echo "🚀 Display the draft for the changelog"
+	@uv run towncrier --draft
+
+.PHONY: release
+release: ## Release the package to pypi.org
+	@echo "🚀 Release package"
+	@uv run prerelease
+	@rm -Rf dist
+	@uv build
+	@uv publish
+	@uv run postrelease
