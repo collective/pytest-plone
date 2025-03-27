@@ -91,6 +91,11 @@ remove-data: ## Remove all content
 ############################################
 # QA
 ############################################
+.PHONY: mypy
+mypy: ## Type checking
+	@echo "$(GREEN)==> Run mypy$(RESET)"
+	@uv run mypy src
+
 .PHONY: lint
 lint: ## Check and fix code base according to Plone standards
 	@echo "$(GREEN)==> Lint codebase$(RESET)"
@@ -98,6 +103,7 @@ lint: ## Check and fix code base according to Plone standards
 	@uvx pyroma@latest -d .
 	@uvx check-python-versions@latest .
 	@uvx zpretty@latest --check src
+	@uv run mypy src
 
 .PHONY: format
 format: ## Check and fix code base according to Plone standards
