@@ -43,3 +43,4 @@ var/
 constraints*.txt
 requirements*.txt
 .coverage*
+/.python-version

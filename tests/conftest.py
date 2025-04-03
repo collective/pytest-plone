@@ -14,6 +14,8 @@ def testdir(pytester: Pytester) -> Pytester:
         """
         from Products.CMFPlone.testing import PRODUCTS_CMFPLONE_FUNCTIONAL_TESTING
         from Products.CMFPlone.testing import PRODUCTS_CMFPLONE_INTEGRATION_TESTING
+        from Products.CMFPlone.testing import PRODUCTS_CMFPLONE_ROBOT_TESTING
+
         from pytest_plone import fixtures_factory
 
         pytest_plugins = ["pytest_plone"]
@@ -23,6 +25,7 @@ def testdir(pytester: Pytester) -> Pytester:
                 (
                     (PRODUCTS_CMFPLONE_FUNCTIONAL_TESTING, "functional"),
                     (PRODUCTS_CMFPLONE_INTEGRATION_TESTING, "integration"),
+                    (PRODUCTS_CMFPLONE_ROBOT_TESTING, "acceptance"),
                 )
             )
         )
@@ -42,7 +45,9 @@ OUR_FIXTURES = [
     "get_vocabulary",
     "http_request",
     "installer",
+    "playwright_page_factory",
     "portal",
+    "portal_factory",
     "profile_last_version",
     "setup_tool",
 ]
