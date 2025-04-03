@@ -32,6 +32,7 @@ classifiers = [
 ]
 dependencies = [
     "pytest<8.0.0",
+    "pytest-playwright",
     "zope.pytestlayer",
     "plone.api",
     "plone.app.testing",

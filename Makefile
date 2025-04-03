@@ -120,6 +120,7 @@ check: format lint ## Check and fix code base according to Plone standards
 ############################################
 .PHONY: test
 test: $(VENV_FOLDER) ## run tests
+	@uv run playwright install
 	@uv run pytest
 
 .PHONY: test-coverage
