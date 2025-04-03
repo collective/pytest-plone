@@ -42,7 +42,9 @@ OUR_FIXTURES = [
     "get_vocabulary",
     "http_request",
     "installer",
+    "playwright_page_factory",
     "portal",
+    "portal_factory",
     "profile_last_version",
     "setup_tool",
 ]

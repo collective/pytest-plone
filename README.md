@@ -283,6 +283,65 @@ def test_get_vocabulary(get_vocabulary):
 
 ```
 
+### portal_factory
+
+|  |  |
+| --- | --- |
+| Description | Factory to get portal with applied user roles. |
+| Required Fixture | **acceptance** |
+| Scope | **Function** |
+
+```python
+import pytest
+from playwright.sync_api import expect
+from plone.app.testing.interfaces import (
+    TEST_USER_NAME,
+    TEST_USER_PASSWORD,
+)
+
+
+class TestPwEvents:
+    @pytest.fixture(autouse=True)
+    def setup(self, portal_factory):
+        self.portal = portal_factory(username=TEST_USER_NAME, roles=['Member', 'Contributor'])
+        self.plone_url = self.portal.absolute_url()
+
+    def test_events_listing(self) -> None:
+```
+
+
+### playwright_page_factory
+
+|  |  |
+| --- | --- |
+| Description | Factory to get a Playwright page with a logged-in user. |
+| Required Fixture | **acceptance** |
+| Scope | **Function** |
+
+```python
+import pytest
+from playwright.sync_api import expect
+from plone.app.testing.interfaces import (
+    TEST_USER_NAME,
+    TEST_USER_PASSWORD,
+)
+
+
+class TestPwEvents:
+    @pytest.fixture(autouse=True)
+    def setup(self, portal_factory, playwright_page_factory):
+        self.page = playwright_page_factory(username=TEST_USER_NAME, password=TEST_USER_PASSWORD)
+        self.portal = portal_factory(username=TEST_USER_NAME, roles=['Member', 'Contributor'])
+        self.plone_url = self.portal.absolute_url()
+
+    def test_events_listing(self) -> None:
+        page = self.page
+        page.goto(f"{self.plone_url}")
+        page.get_by_role("link", name="Add new…").click()
+        page.get_by_role("link", name="Folder").click()
+```
+
+
 ### setup_tool
 
 |  |  |

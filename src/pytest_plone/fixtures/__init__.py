@@ -11,6 +11,8 @@ from .base import portal
 from .content import get_behaviors
 from .content import get_fti
 from .env import generate_mo
+from .playwright import playwright_page_factory
+from .playwright import portal_factory
 from .vocabularies import get_vocabulary
 
 
@@ -24,7 +26,9 @@ __all__ = [
     "get_vocabulary",
     "http_request",
     "installer",
+    "playwright_page_factory",
     "portal",
+    "portal_factory",
     "profile_last_version",
     "setup_tool",
 ]
