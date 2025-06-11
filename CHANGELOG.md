@@ -9,6 +9,20 @@
 
 <!-- towncrier release notes start -->
 
+## 1.0.0a2 (2025-06-11)
+
+
+### Internal:
+
+- Upgrade zope.pytest to version 8.3. @ericof [#35](https://github.com/collective/pytest-plone/issues/35)
+- Fix Makefile release target @ericof 
+- Upgrade pytest to version 8.4.0. @ericof 
+
+
+### Documentation:
+
+- Fix Tests badge on `README.md`. @stevepiercy [#31](https://github.com/collective/pytest-plone/issues/31)
+
 ## 1.0.0a1 (2025-03-27)
 
 
