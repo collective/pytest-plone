@@ -11,7 +11,7 @@
 
 [![PyPI - Plone Versions](https://img.shields.io/pypi/frameworkversions/plone/pytest-plone)](https://pypi.org/project/pytest-plone/)
 
-[![Tests](https://github.com/collective/pytest-plone/blob/main/.github/workflows/ci.yml/badge.svg)](https://github.com/collective/pytest-plone/blob/main/.github/workflows/ci.yml)
+[![Tests](https://github.com/collective/pytest-plone/actions/workflows/ci.yml/badge.svg)](https://github.com/collective/pytest-plone/actions/workflows/ci.yml)
 ![Code Style](https://img.shields.io/badge/Code%20Style-Black-000000)
 
 [![GitHub contributors](https://img.shields.io/github/contributors/collective/pytest-plone)](https://github.com/collective/pytest-plone)
