@@ -3,6 +3,7 @@ from plone.app.vocabularies import PermissiveVocabulary
 from plone.app.vocabularies import SlicableVocabulary
 from plone.dexterity.content import DexterityContent
 from plone.dexterity.fti import DexterityFTI
+from Products.CMFPlone.Portal import PloneSite
 from typing import Protocol
 from typing import TypeAlias
 from zope.schema.vocabulary import SimpleVocabulary
@@ -30,3 +31,17 @@ class BehaviorsGetter(Protocol):
 
 class VocabularyGetter(Protocol):
     def __call__(self, name: str, context: Context) -> PloneVocabulary: ...
+
+
+class ProfilesApplier(Protocol):
+    def __call__(self, portal: PloneSite, profiles: list[str]) -> None: ...
+
+
+class ContentCreator(Protocol):
+    def __call__(
+        self, container: DexterityContent | Item, content: list[dict]
+    ) -> None: ...
+
+
+class RolesGranter(Protocol):
+    def __call__(self, context: DexterityContent | Item, roles: list[str]) -> None: ...

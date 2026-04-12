@@ -28,10 +28,17 @@ BACKEND_FOLDER=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 ifdef PLONE_VERSION
 PLONE_VERSION := $(PLONE_VERSION)
 else
-PLONE_VERSION := 6.1.1
+PLONE_VERSION := 6.1.4
+endif
+
+ifdef CI
+UV_VENV_ARGS :=
+else
+UV_VENV_ARGS := --python={{ cookiecutter.__supported_versions_python[0] }}
 endif
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
+export VIRTUAL_ENV=$(VENV_FOLDER)
 BIN_FOLDER=$(VENV_FOLDER)/bin
 
 # Environment variables to be exported

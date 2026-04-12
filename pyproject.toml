@@ -46,6 +46,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
+    "plone-stubs",
     "pytest-cov",
     "pytest-xdist",
     "mypy>=1.15.0",

@@ -2,8 +2,10 @@
 
 from plone.dexterity.fti import DexterityFTI
 from plone.dexterity.interfaces import IDexterityFTI
+from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFPlone.Portal import PloneSite
 from pytest_plone import _types as t
+from pytest_plone.fixtures import markers
 from zope.component import queryUtility
 
 import pytest
@@ -47,3 +49,23 @@ def get_behaviors(get_fti: t.FTIGetter) -> t.BehaviorsGetter:
         return list(fti.behaviors)
 
     return get_behaviors
+
+
+@pytest.fixture(scope="session")
+def create_content() -> t.ContentCreator:
+    """Create content items in a Plone site as the site owner.
+
+    Example usage:
+    ```python
+    def test_with_content(portal, create_content):
+        create_content(portal, [
+            {"type": "Document", "id": "doc1", "title": "A Document"},
+        ])
+        assert "doc1" in portal
+    ```
+    """
+
+    def func(container: PortalContent, content: list[dict]) -> None:
+        markers.create_content(container, content)
+
+    return func
