@@ -46,7 +46,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "plone-stubs; python_version >= '3.12'",
+    "plone-stubs @ git+https://github.com/plone/plone-stubs.git ; python_version >= '3.12'",
     "pytest-cov",
     "pytest-xdist",
     "mypy>=1.15.0",
@@ -67,6 +67,9 @@ plone = "pytest_plone.fixtures"
 
 [tool.uv]
 managed = false
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.version]
 path = "src/pytest_plone/__init__.py"
