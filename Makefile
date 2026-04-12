@@ -34,7 +34,7 @@ endif
 ifdef CI
 UV_VENV_ARGS :=
 else
-UV_VENV_ARGS := --python={{ cookiecutter.__supported_versions_python[0] }}
+UV_VENV_ARGS := --python=3.12
 endif
 
 VENV_FOLDER=$(BACKEND_FOLDER)/.venv
@@ -74,7 +74,7 @@ requirements-mxdev.txt: ## Generate constraints file
 
 $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 	@echo "$(GREEN)==> Install environment$(RESET)"
-	@uv venv $(VENV_FOLDER)
+	@if [[ -d "$(VENV_FOLDER)" ]]; then echo "$(YELLOW)==> Environment already exists at $(VENV_FOLDER)$(RESET)"; else uv venv $(UV_VENV_ARGS) $(VENV_FOLDER); fi
 	@uv pip install -r requirements-mxdev.txt
 
 .PHONY: sync
