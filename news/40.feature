@@ -1,0 +1,1 @@
+Added `request_factory`, `manager_request`, and `anon_request` fixtures — build a `RelativeSession` against the functional portal with Manager, Anonymous, or custom basic-auth credentials. Replaces boilerplate duplicated across downstream codebases. @ericof

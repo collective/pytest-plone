@@ -444,6 +444,61 @@ def test_manager_action(portal, grant_roles):
     # test user now has Manager role on portal
 ```
 
+### request_factory
+
+|  |  |
+| --- | --- |
+| Description | Callable that builds a `RelativeSession` against the functional portal. |
+| Required Fixture | **functional_portal** |
+| Scope | **Function** |
+
+Replaces the 5+ near-identical request-session fixtures that downstream codebases reimplement. Returns a `RelativeSession` (a thin `requests.Session` subclass that resolves relative URLs against the portal's base URL) with sensible defaults:
+
+- `role="Manager"` — authenticate as the portal owner.
+- `role="Anonymous"` (default) — no authentication.
+- `basic_auth=(user, password)` — any other identity; takes precedence over `role`.
+- `api=True` (default) — suffix the base URL with `++api++` so relative calls hit the REST API.
+
+Sessions are closed automatically at the end of the test.
+
+```python
+def test_list_content(request_factory):
+    """Test that the Manager role can list content."""
+    session = request_factory(role="Manager")
+    response = session.get("/")
+    assert response.status_code == 200
+```
+
+### manager_request
+
+|  |  |
+| --- | --- |
+| Description | `RelativeSession` pre-authenticated as the portal owner (Manager). |
+| Required Fixture | **request_factory** |
+| Scope | **Function** |
+
+```python
+def test_controlpanels(manager_request):
+    """Test listing of control panels."""
+    response = manager_request.get("/@controlpanels")
+    assert response.status_code == 200
+```
+
+### anon_request
+
+|  |  |
+| --- | --- |
+| Description | `RelativeSession` with no authentication (Anonymous). |
+| Required Fixture | **request_factory** |
+| Scope | **Function** |
+
+```python
+def test_public_endpoint(anon_request):
+    """Test a public REST API endpoint."""
+    response = anon_request.get("/")
+    assert response.status_code == 200
+```
+
 ## Markers
 
 ### @pytest.mark.portal

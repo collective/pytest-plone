@@ -40,6 +40,7 @@ dependencies = [
     "plone.browserlayer",
     "plone.dexterity",
     "Products.CMFPlone[test]",
+    "requests",
     "zope.component",
     "zope.schema",
 ]

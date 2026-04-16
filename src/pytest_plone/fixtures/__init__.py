@@ -17,6 +17,9 @@ from .content import create_content
 from .content import get_behaviors
 from .content import get_fti
 from .env import generate_mo
+from .requests import anon_request
+from .requests import manager_request
+from .requests import request_factory
 from .security import grant_roles
 from .vocabularies import get_vocabulary
 
@@ -24,6 +27,7 @@ import pytest
 
 
 __all__ = [
+    "anon_request",
     "app",
     "apply_profiles",
     "browser_layers",
@@ -39,8 +43,10 @@ __all__ = [
     "grant_roles",
     "http_request",
     "installer",
+    "manager_request",
     "portal",
     "profile_last_version",
+    "request_factory",
     "setup_tool",
     "uninstalled",
 ]
