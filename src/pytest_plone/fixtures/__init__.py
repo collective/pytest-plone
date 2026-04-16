@@ -6,6 +6,7 @@ from .addons import controlpanel_actions
 from .addons import installer
 from .addons import profile_last_version
 from .addons import setup_tool
+from .addons import uninstalled
 from .base import app
 from .base import http_request
 from .base import portal
@@ -35,6 +36,7 @@ __all__ = [
     "portal",
     "profile_last_version",
     "setup_tool",
+    "uninstalled",
 ]
 
 

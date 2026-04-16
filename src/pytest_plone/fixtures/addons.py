@@ -31,6 +31,38 @@ def installer(portal: PloneSite) -> InstallerView:
 
 
 @pytest.fixture
+def uninstalled(installer: InstallerView, package_name: str) -> None:
+    """Uninstall the add-on under test from the current portal.
+
+    Requires a ``package_name`` fixture defined in your ``conftest.py``
+    that returns the distribution name of the add-on being tested.
+
+    Example usage:
+    ```python
+    # conftest.py
+    import pytest
+
+
+    @pytest.fixture
+    def package_name() -> str:
+        return "collective.person"
+
+
+    # tests/test_setup.py
+    class TestSetupUninstall:
+        @pytest.fixture(autouse=True)
+        def uninstalled(self, uninstalled):
+            # add-on is now uninstalled for every test in this class
+            pass
+
+        def test_product_uninstalled(self, installer, package_name):
+            assert installer.is_product_installed(package_name) is False
+    ```
+    """
+    installer.uninstall_product(package_name)
+
+
+@pytest.fixture
 def browser_layers(portal: PloneSite) -> list[InterfaceClass]:
     """List of browser layers registered in a portal.
 

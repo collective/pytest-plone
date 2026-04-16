@@ -178,6 +178,35 @@ def test_dependency_installed(installer, package):
 
 ```
 
+### uninstalled
+
+|  |  |
+| --- | --- |
+| Description | Uninstall the add-on under test from the current portal. |
+| Required Fixture | **installer**, **package_name** (user-provided) |
+| Scope | **Function** |
+
+This fixture removes the duplicate per-project boilerplate from the canonical uninstall smoke test. You must define a `package_name` fixture in your `conftest.py` (or test module) that returns the distribution name of your add-on.
+
+```python
+import pytest
+
+
+@pytest.fixture
+def package_name() -> str:
+    """Distribution name of the add-on under test."""
+    return "collective.person"
+
+
+class TestSetupUninstall:
+    @pytest.fixture(autouse=True)
+    def _uninstalled(self, uninstalled):
+        """Uninstall the add-on before every test in this class."""
+
+    def test_product_uninstalled(self, installer, package_name):
+        assert installer.is_product_installed(package_name) is False
+```
+
 ### browser_layers
 
 |  |  |
