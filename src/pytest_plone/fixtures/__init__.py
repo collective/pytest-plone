@@ -8,6 +8,9 @@ from .addons import profile_last_version
 from .addons import setup_tool
 from .addons import uninstalled
 from .base import app
+from .base import functional_app
+from .base import functional_http_request
+from .base import functional_portal
 from .base import http_request
 from .base import portal
 from .content import create_content
@@ -26,6 +29,9 @@ __all__ = [
     "browser_layers",
     "controlpanel_actions",
     "create_content",
+    "functional_app",
+    "functional_http_request",
+    "functional_portal",
     "generate_mo",
     "get_behaviors",
     "get_fti",

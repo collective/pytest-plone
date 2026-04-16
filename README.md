@@ -139,6 +139,58 @@ def test_myproduct_controlpanel_view(portal, http_request):
 
 ```
 
+### functional_app
+
+|  |  |
+| --- | --- |
+| Description | Zope root bound to the **functional** testing layer. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+Use this when you need a functional-layer counterpart to `app` — typically for REST API or browser tests.
+
+```python
+def test_functional_app(functional_app):
+    """Test app title."""
+    assert functional_app.getPhysicalPath() == ("", )
+```
+
+### functional_portal
+
+|  |  |
+| --- | --- |
+| Description | Portal object bound to the **functional** testing layer. Honors `@pytest.mark.portal`. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+Parallel to `portal`, but bound to the functional layer. Accepts the same `@pytest.mark.portal` marker for profiles, content, and roles — see the **Markers** section.
+
+```python
+def test_functional_portal_title(functional_portal):
+    """Test portal title on the functional layer."""
+    assert functional_portal.title == "Plone site"
+```
+
+### functional_http_request
+
+|  |  |
+| --- | --- |
+| Description | HTTP Request bound to the **functional** testing layer. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+```python
+from plone import api
+
+
+def test_functional_view(functional_portal, functional_http_request):
+    """Test a browser view on the functional layer."""
+    view = api.content.get_view(
+        "myproduct-controlpanel", functional_portal, functional_http_request
+    )
+    assert view is not None
+```
+
 ### installer
 
 |  |  |
