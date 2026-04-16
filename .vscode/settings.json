@@ -1,5 +1,4 @@
 {
-  "flake8.args": ["--config=pyproject.toml"],
   "ruff.organizeImports": true,
   "python.terminal.activateEnvironment": true,
   "python.testing.pytestArgs": [
@@ -7,7 +6,10 @@
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "python.analysis.extraPaths": [
+    "sources/plone-stubs/src"
+  ],
   "[markdown]": {
     "editor.formatOnSave": false
-  }  
+  }
 }

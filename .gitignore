@@ -43,3 +43,7 @@ var/
 constraints*.txt
 requirements*.txt
 .coverage*
+.*_cache/
+
+# Local Claude context (not for sharing)
+.claude/*.local.*

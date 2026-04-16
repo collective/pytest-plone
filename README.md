@@ -316,6 +316,83 @@ def test_last_version(profile_last_version):
     assert version == "1000"
 
 ```
+
+### apply_profiles
+
+|  |  |
+| --- | --- |
+| Description | Function to apply GenericSetup profiles to a Plone site. |
+| Required Fixture | **integration** |
+| Scope | **Session** |
+
+```python
+def test_with_profile(portal, apply_profiles):
+    """Test that a profile can be applied."""
+    apply_profiles(portal, ["my.addon:testing"])
+```
+
+### create_content
+
+|  |  |
+| --- | --- |
+| Description | Function to create content items in a Plone site as the site owner. |
+| Required Fixture | **integration** |
+| Scope | **Session** |
+
+```python
+def test_with_content(portal, create_content):
+    """Test that content is created."""
+    create_content(portal, [
+        {"type": "Document", "id": "doc1", "title": "A Document"},
+    ])
+    assert "doc1" in portal
+```
+
+### grant_roles
+
+|  |  |
+| --- | --- |
+| Description | Function to grant local roles to the test user on a given context. |
+| Required Fixture | **integration** |
+| Scope | **Session** |
+
+```python
+def test_manager_action(portal, grant_roles):
+    """Test an action that requires Manager role."""
+    grant_roles(portal, ["Manager"])
+    # test user now has Manager role on portal
+```
+
+## Markers
+
+### @pytest.mark.portal
+
+Configure the `portal` fixture with GenericSetup profiles, pre-created content, and/or user roles — without overriding the fixture.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `profiles` | `list[str]` | GenericSetup profile IDs to apply (e.g. `["my.addon:testing"]`) |
+| `content` | `list[dict]` | Dicts passed as keyword arguments to `plone.api.content.create` |
+| `roles` | `list[str]` | Roles granted to the test user via `plone.api.user.grant_roles` |
+
+Setup is applied in order: **profiles → content → roles**.
+
+```python
+import pytest
+
+
+@pytest.mark.portal(
+    profiles=["my.addon:testing"],
+    content=[{"type": "Document", "id": "doc1", "title": "Doc 1"}],
+    roles=["Manager"],
+)
+def test_something(portal):
+    """Test with custom portal setup."""
+    assert "doc1" in portal
+```
+
+Tests without the marker see no behavior change — fully backwards-compatible.
+
 ## Plugin Development
 
 You need a working `python` environment (system, virtualenv, pyenv, etc) version 3.8 or superior.

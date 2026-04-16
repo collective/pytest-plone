@@ -7,6 +7,7 @@ from Products.CMFPlone.controlpanel.browser.quickinstaller import InstallerView
 from Products.CMFPlone.Portal import PloneSite
 from Products.GenericSetup.tool import SetupTool
 from pytest_plone import _types as t
+from pytest_plone.fixtures import markers
 from zope.interface.interface import InterfaceClass
 
 import pytest
@@ -95,3 +96,20 @@ def profile_last_version(setup_tool: SetupTool) -> t.ProfileVersionGetter:
         return version[0] if version else ""
 
     return profile_last_version
+
+
+@pytest.fixture(scope="session")
+def apply_profiles() -> t.ProfilesApplier:
+    """Apply GenericSetup profiles to a Plone site.
+
+    Example usage:
+    ```python
+    def test_with_profile(portal, apply_profiles):
+        apply_profiles(portal, ["my.addon:testing"])
+    ```
+    """
+
+    def func(portal: PloneSite, profiles: list[str]) -> None:
+        markers.apply_profiles(portal, profiles)
+
+    return func

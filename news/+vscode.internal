@@ -1,0 +1,1 @@
+Updated VS Code settings: removed obsolete flake8 config, added plone-stubs to analysis paths. @ericof
