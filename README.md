@@ -139,6 +139,58 @@ def test_myproduct_controlpanel_view(portal, http_request):
 
 ```
 
+### functional_app
+
+|  |  |
+| --- | --- |
+| Description | Zope root bound to the **functional** testing layer. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+Use this when you need a functional-layer counterpart to `app` — typically for REST API or browser tests.
+
+```python
+def test_functional_app(functional_app):
+    """Test app title."""
+    assert functional_app.getPhysicalPath() == ("", )
+```
+
+### functional_portal
+
+|  |  |
+| --- | --- |
+| Description | Portal object bound to the **functional** testing layer. Honors `@pytest.mark.portal`. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+Parallel to `portal`, but bound to the functional layer. Accepts the same `@pytest.mark.portal` marker for profiles, content, and roles — see the **Markers** section.
+
+```python
+def test_functional_portal_title(functional_portal):
+    """Test portal title on the functional layer."""
+    assert functional_portal.title == "Plone site"
+```
+
+### functional_http_request
+
+|  |  |
+| --- | --- |
+| Description | HTTP Request bound to the **functional** testing layer. |
+| Required Fixture | **functional** |
+| Scope | **Function** |
+
+```python
+from plone import api
+
+
+def test_functional_view(functional_portal, functional_http_request):
+    """Test a browser view on the functional layer."""
+    view = api.content.get_view(
+        "myproduct-controlpanel", functional_portal, functional_http_request
+    )
+    assert view is not None
+```
+
 ### installer
 
 |  |  |
@@ -176,6 +228,35 @@ def test_dependency_installed(installer, package):
     """Test if dependency is installed."""
     assert installer.is_product_installed(package) is True
 
+```
+
+### uninstalled
+
+|  |  |
+| --- | --- |
+| Description | Uninstall the add-on under test from the current portal. |
+| Required Fixture | **installer**, **package_name** (user-provided) |
+| Scope | **Function** |
+
+This fixture removes the duplicate per-project boilerplate from the canonical uninstall smoke test. You must define a `package_name` fixture in your `conftest.py` (or test module) that returns the distribution name of your add-on.
+
+```python
+import pytest
+
+
+@pytest.fixture
+def package_name() -> str:
+    """Distribution name of the add-on under test."""
+    return "collective.person"
+
+
+class TestSetupUninstall:
+    @pytest.fixture(autouse=True)
+    def _uninstalled(self, uninstalled):
+        """Uninstall the add-on before every test in this class."""
+
+    def test_product_uninstalled(self, installer, package_name):
+        assert installer.is_product_installed(package_name) is False
 ```
 
 ### browser_layers
@@ -361,6 +442,61 @@ def test_manager_action(portal, grant_roles):
     """Test an action that requires Manager role."""
     grant_roles(portal, ["Manager"])
     # test user now has Manager role on portal
+```
+
+### request_factory
+
+|  |  |
+| --- | --- |
+| Description | Callable that builds a `RelativeSession` against the functional portal. |
+| Required Fixture | **functional_portal** |
+| Scope | **Function** |
+
+Replaces the 5+ near-identical request-session fixtures that downstream codebases reimplement. Returns a `RelativeSession` (a thin `requests.Session` subclass that resolves relative URLs against the portal's base URL) with sensible defaults:
+
+- `role="Manager"` — authenticate as the portal owner.
+- `role="Anonymous"` (default) — no authentication.
+- `basic_auth=(user, password)` — any other identity; takes precedence over `role`.
+- `api=True` (default) — suffix the base URL with `++api++` so relative calls hit the REST API.
+
+Sessions are closed automatically at the end of the test.
+
+```python
+def test_list_content(request_factory):
+    """Test that the Manager role can list content."""
+    session = request_factory(role="Manager")
+    response = session.get("/")
+    assert response.status_code == 200
+```
+
+### manager_request
+
+|  |  |
+| --- | --- |
+| Description | `RelativeSession` pre-authenticated as the portal owner (Manager). |
+| Required Fixture | **request_factory** |
+| Scope | **Function** |
+
+```python
+def test_controlpanels(manager_request):
+    """Test listing of control panels."""
+    response = manager_request.get("/@controlpanels")
+    assert response.status_code == 200
+```
+
+### anon_request
+
+|  |  |
+| --- | --- |
+| Description | `RelativeSession` with no authentication (Anonymous). |
+| Required Fixture | **request_factory** |
+| Scope | **Function** |
+
+```python
+def test_public_endpoint(anon_request):
+    """Test a public REST API endpoint."""
+    response = anon_request.get("/")
+    assert response.status_code == 200
 ```
 
 ## Markers

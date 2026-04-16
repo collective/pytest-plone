@@ -6,13 +6,20 @@ from .addons import controlpanel_actions
 from .addons import installer
 from .addons import profile_last_version
 from .addons import setup_tool
+from .addons import uninstalled
 from .base import app
+from .base import functional_app
+from .base import functional_http_request
+from .base import functional_portal
 from .base import http_request
 from .base import portal
 from .content import create_content
 from .content import get_behaviors
 from .content import get_fti
 from .env import generate_mo
+from .requests import anon_request
+from .requests import manager_request
+from .requests import request_factory
 from .security import grant_roles
 from .vocabularies import get_vocabulary
 
@@ -20,11 +27,15 @@ import pytest
 
 
 __all__ = [
+    "anon_request",
     "app",
     "apply_profiles",
     "browser_layers",
     "controlpanel_actions",
     "create_content",
+    "functional_app",
+    "functional_http_request",
+    "functional_portal",
     "generate_mo",
     "get_behaviors",
     "get_fti",
@@ -32,9 +43,12 @@ __all__ = [
     "grant_roles",
     "http_request",
     "installer",
+    "manager_request",
     "portal",
     "profile_last_version",
+    "request_factory",
     "setup_tool",
+    "uninstalled",
 ]
 
 

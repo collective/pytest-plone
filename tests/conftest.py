@@ -33,11 +33,15 @@ def testdir(pytester: Pytester) -> Pytester:
 
 
 OUR_FIXTURES = [
+    "anon_request",
     "app",
     "apply_profiles",
     "browser_layers",
     "controlpanel_actions",
     "create_content",
+    "functional_app",
+    "functional_http_request",
+    "functional_portal",
     "generate_mo",
     "get_behaviors",
     "get_fti",
@@ -45,8 +49,10 @@ OUR_FIXTURES = [
     "grant_roles",
     "http_request",
     "installer",
+    "manager_request",
     "portal",
     "profile_last_version",
+    "request_factory",
     "setup_tool",
 ]
 

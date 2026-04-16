@@ -59,3 +59,54 @@ def http_request(integration: Layer) -> HTTPRequest:
     ```
     """
     return integration["request"]
+
+
+@pytest.fixture()
+def functional_app(functional: Layer) -> Application:
+    """Returns the root of a Zope application for a functional Layer.
+
+    Mirrors :func:`app` but bound to the ``functional`` layer. Use this in
+    REST API, browser, or other tests that require transaction-level
+    isolation instead of the integration-layer stacked-DemoStorage.
+
+    Example usage:
+    ```python
+    def test_functional_app(self, functional_app):
+        assert functional_app.title == "Zope"
+    ```
+    """
+    return functional["app"]
+
+
+@pytest.fixture()
+def functional_portal(functional: Layer, request: pytest.FixtureRequest) -> PloneSite:
+    """Returns the default Plone Site for a functional Layer.
+
+    Mirrors :func:`portal` but bound to the ``functional`` layer and also
+    honors ``@pytest.mark.portal`` for GenericSetup profiles, pre-created
+    content, and test-user roles.
+
+    Example usage:
+    ```python
+    def test_functional_portal(self, functional_portal):
+        assert functional_portal.title == "Plone site"
+    ```
+    """
+    portal: PloneSite = functional["portal"]
+    apply_portal_marker(portal, request)
+    return portal
+
+
+@pytest.fixture
+def functional_http_request(functional: Layer) -> HTTPRequest:
+    """Returns the current request object for a functional Layer.
+
+    Mirrors :func:`http_request` but bound to the ``functional`` layer.
+
+    Example usage:
+    ```python
+    def test_functional_request(self, functional_http_request):
+        assert functional_http_request.method == "GET"
+    ```
+    """
+    return functional["request"]

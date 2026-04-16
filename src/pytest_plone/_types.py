@@ -4,6 +4,7 @@ from plone.app.vocabularies import SlicableVocabulary
 from plone.dexterity.content import DexterityContent
 from plone.dexterity.fti import DexterityFTI
 from Products.CMFPlone.Portal import PloneSite
+from typing import Any
 from typing import Protocol
 from typing import TypeAlias
 from zope.schema.vocabulary import SimpleVocabulary
@@ -45,3 +46,13 @@ class ContentCreator(Protocol):
 
 class RolesGranter(Protocol):
     def __call__(self, context: DexterityContent | Item, roles: list[str]) -> None: ...
+
+
+class RequestFactory(Protocol):
+    def __call__(
+        self,
+        *,
+        role: str = ...,
+        basic_auth: tuple[str, str] | None = ...,
+        api: bool = ...,
+    ) -> Any: ...
