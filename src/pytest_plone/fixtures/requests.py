@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from urllib.parse import urlparse
 
 import pytest
-import requests
+import requests  # type: ignore[import-untyped]
 
 
 _ROLE_AUTH: dict[str, tuple[str, str] | None] = {
