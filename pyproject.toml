@@ -22,7 +22,6 @@ classifiers = [
     "Framework :: Plone :: 6.2",
     "Framework :: Pytest",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.10",
@@ -47,7 +46,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "plone-stubs @ git+https://github.com/plone/plone-stubs.git ; python_version >= '3.12'",
+    "plone-stubs ; python_version >= '3.12'",
     "pytest-cov",
     "pytest-xdist",
     "mypy>=1.15.0",
@@ -68,6 +67,9 @@ plone = "pytest_plone.fixtures"
 
 [tool.uv]
 managed = false
+
+[tool.uv.sources]
+plone-stubs = { git = "https://github.com/plone/plone-stubs.git" }
 
 [tool.hatch.metadata]
 allow-direct-references = true
