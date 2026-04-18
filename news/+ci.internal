@@ -1,1 +1,0 @@
-Updated CI workflows: bumped actions/checkout to v6 and astral-sh/setup-uv to v8.0.0, replaced manual cache with setup-uv built-in caching, fixed Makefile venv creation conflict with setup-uv, and added fail-fast: false to test matrix. @ericof

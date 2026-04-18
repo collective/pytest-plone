@@ -9,6 +9,26 @@
 
 <!-- towncrier release notes start -->
 
+## 1.0.0a3 (2026-04-18)
+
+
+### New features:
+
+- Added `@pytest.mark.portal` marker support for configuring the `portal` fixture with GenericSetup profiles, pre-created content, and user roles. @ericof [#37](https://github.com/collective/pytest-plone/issues/37)
+- Added the `uninstalled` fixture — reads a user-provided `package_name` fixture and calls `installer.uninstall_product`, removing boilerplate from the canonical add-on uninstall smoke test. @ericof [#38](https://github.com/collective/pytest-plone/issues/38)
+- Added `functional_app`, `functional_portal`, and `functional_http_request` fixtures — functional-layer counterparts to `app`, `portal`, and `http_request`. `functional_portal` honors the `@pytest.mark.portal` marker. @ericof [#39](https://github.com/collective/pytest-plone/issues/39)
+- Added `request_factory`, `manager_request`, and `anon_request` fixtures — build a `RelativeSession` against the functional portal with Manager, Anonymous, or custom basic-auth credentials. Replaces boilerplate duplicated across downstream codebases. @ericof [#40](https://github.com/collective/pytest-plone/issues/40)
+- Added `apply_profiles` session-scoped fixture to apply GenericSetup profiles to a Plone site. @ericof 
+- Added `create_content` session-scoped fixture to create content items in a Plone site as the site owner. @ericof 
+- Added `grant_roles` session-scoped fixture to grant local roles to the test user on a given context. @ericof 
+
+
+### Internal:
+
+- Updated CI workflows: bumped actions/checkout to v6 and astral-sh/setup-uv to v8.0.0, replaced manual cache with setup-uv built-in caching, fixed Makefile venv creation conflict with setup-uv, and added fail-fast: false to test matrix. @ericof 
+- Updated VS Code settings: removed obsolete flake8 config, added plone-stubs to analysis paths. @ericof 
+- Updated development tooling: bumped Plone version to 6.1.4, added plone-stubs to test dependencies, updated mx.ini and .gitignore. @ericof 
+
 ## 1.0.0a2 (2025-06-11)
 
 

@@ -1,1 +1,0 @@
-Added `functional_app`, `functional_portal`, and `functional_http_request` fixtures — functional-layer counterparts to `app`, `portal`, and `http_request`. `functional_portal` honors the `@pytest.mark.portal` marker. @ericof
