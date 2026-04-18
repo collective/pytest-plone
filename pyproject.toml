@@ -91,6 +91,7 @@ exclude = [
 packages = ["src/pytest_plone"]
 
 [tool.towncrier]
+package = "pytest_plone"
 directory = "news/"
 filename = "CHANGELOG.md"
 start_string = "<!-- towncrier release notes start -->\n"
